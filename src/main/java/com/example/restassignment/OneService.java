@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,62 +35,27 @@ public class OneService {
 		return mapper.searchSubject(id);
 	}
 	
-	public ApiView getList(int id) {
+	public ListView getList(int id) {
 		ListView result = new ListView();
 		Com company = this.searchCompany(id);
 		List<Sub> subject = this.searchSubject(id);
 		BeanUtils.copyProperties(company, result);
 		result.setAcount_count(subject.size());
 		result.setAccounts(subject);
-		return this.restApi(result,200);
+		return result;
 	}
 
 	@Transactional
-	public ApiView del(int companyId) {
-		int result = mapper.deleteCompany(companyId);
-		if (result == 1)
-			return this.restApi("Success", 200);
-		else
-			return this.restApi("Failed", 2000);
+	public int del(int companyId) {
+		return mapper.deleteCompany(companyId);
 	}
 	@Transactional
-	public ApiView edit(int companyId ,Com param) {
+	public int edit(int companyId ,Com param) {
 		param.setId(companyId);
-		int result = mapper.updateCompany(param);
-		if (result == 1)
-			return this.restApi("Success", 200);
-		else
-			return this.restApi("Failed", 2000);
+		return mapper.updateCompany(param);
 	}
 	@Transactional
-	public ApiView add(Com param) {
-		int result = mapper.insertCompany(param);
-		if (result == 1)
-			return this.restApi("Success", 200);
-		else
-			return this.restApi("Failed", 2000);
-	}
-	public ApiView restApi(Object o,int status) {
-		ApiView v = new ApiView();
-		switch (status){
-			case 200:
-				v.setCode("200");
-				v.setStatus("Ok");
-				v.setData(o);
-				break;
-			case 2000:
-				v.setCode("2000");
-				v.setStatus("Fail");
-				v.setData("Failed");
-				break;
-			default:
-				v.setCode("9999");
-				v.setStatus("Fail");
-				v.setData("Failed");
-				break;
-				
-		}
-
-		return v;
+	public int add(Com param) {
+		return mapper.insertCompany(param);
 	}
 }
