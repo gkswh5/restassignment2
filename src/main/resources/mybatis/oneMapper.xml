@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.example.restassignment.OneMapper">
+
+ <select id="searchCompany" resultType="com.example.restassignment.Com">
+	SELECT * from go_company where id= #{id}
+ </select> 
+ 
+ <select id="searchSubject" resultType="com.example.restassignment.Sub">
+	SELECT * from  go_account_subject where company_id= #{id}
+ </select>
+ 
+ <delete id="deleteCompany">
+ delete from go_company where id = #{id}
+ </delete>
+ 
+ <update id="updateCompany" parameterType="com.example.restassignment.Com">
+ UPDATE go_company 
+    <set>
+      <if test="created_at != null">created_at=#{created_at},</if>
+      <if test="modified_at != null">modified_at=#{modified_at},</if>
+      <if test="deleted_at != null">deleted_at=#{deleted_at},</if>
+      <if test="companyName != null">companyName=#{companyName},</if>
+      <if test="users_total != null">users_total=#{users_total},</if>
+      <if test="users_deleted != null">users_deleted=#{users_deleted},</if>
+      <if test="users_use != null">users_use=#{users_use},</if>
+      <if test="service_avail != null">service_avail=#{service_avail},</if>
+      <if test="sync != null">sync=#{sync},</if>
+      <if test="sync_kind != null">sync_kind=#{sync_kind},</if>
+      <if test="sync_id != null">sync_id=#{sync_id},</if>
+      id = id
+    </set>
+  where id = #{id}
+</update>
+
+<insert id="insertCompany" parameterType="com.example.restassignment.Com">
+INSERT INTO go_company (created_at,modified_at,deleted_at,companyName,users_total,users_deleted,users_use,service_avail,sync,sync_kind,sync_id) VALUES (
+		#{created_at},#{modified_at},#{deleted_at},#{companyName},#{users_total},#{users_deleted},#{users_use},#{service_avail},#{sync},#{sync_kind},#{sync_id})
+</insert>
+
+</mapper>
