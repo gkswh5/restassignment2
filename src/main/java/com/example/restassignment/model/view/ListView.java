@@ -1,6 +1,8 @@
-package com.example.restassignment;
+package com.example.restassignment.model.view;
 
 import java.util.List;
+
+import com.example.restassignment.model.entity.Sub;
 
 public class ListView {
 	  int id;

@@ -1,4 +1,4 @@
-package com.example.restassignment;
+package com.example.restassignment.model.view;
 
 public class ApiView {
 	String code;
