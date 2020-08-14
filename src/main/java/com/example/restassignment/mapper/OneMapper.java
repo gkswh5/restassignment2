@@ -21,4 +21,7 @@ public interface OneMapper {
 	int updateCompany(Com param);
 
 	int insertCompany(Com param);
+	int insertbulkCompany(List<Com> sublist);
+	int insertSubject(Sub param);
+	int insertbulkSubject(List<Sub> sublist);
 }

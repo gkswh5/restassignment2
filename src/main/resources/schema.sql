@@ -21,7 +21,11 @@ CREATE TABLE IF NOT EXISTS go_account_subject (
   account_subject_name_detail VARCHAR(30),
   account_subject_name VARCHAR(255),
   division VARCHAR(50),
+  relation_code VARCHAR(50),
+  relation_account_subject_name_detail VARCHAR(50),
+  company_id INT,
   created_at VARCHAR(30),
   modified_at VARCHAR(30),
-  INDEX(company_name)
+  deleted_at VARCHAR(30),
+  INDEX(id)
 ) engine=InnoDB;

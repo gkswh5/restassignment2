@@ -3,26 +3,15 @@ package com.example.restassignment.model.entity;
 import javax.validation.constraints.NotBlank;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-public class Com {
-	@CsvIgnore
-	private int id;
-	@CsvIgnore
-	private String created_at;
-	@CsvIgnore
-	private String modified_at;
-	@CsvIgnore
-	private String deleted_at;	
-	@NotBlank
+public class ComCSV {
 	@CsvBindByName(column = "회사명")
+	@NotBlank
 	private String companyName;
 	@CsvBindByName(column = "사용자 총 계정수")
 	private int users_total;
@@ -38,4 +27,5 @@ public class Com {
 	private String sync_kind;
 	@CsvBindByName(column = "연동 ID")
 	private int sync_id;
+	
 }

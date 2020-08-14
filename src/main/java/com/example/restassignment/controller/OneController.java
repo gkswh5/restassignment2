@@ -1,5 +1,8 @@
 package com.example.restassignment.controller;
 
+import java.io.IOException;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +17,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.restassignment.lib.CSVLib;
+import com.example.restassignment.model.entity.CSVfiles;
 import com.example.restassignment.model.entity.Com;
 import com.example.restassignment.model.view.ApiView;
 import com.example.restassignment.model.view.ListView;
 import com.example.restassignment.service.OneService;
 
-@ControllerAdvice
+
 @RestController
 public class OneController {
 	@Autowired
-	OneService oneService;
+	private OneService oneService;
 
 	public ApiView restApi(Object o, int status) {
 		ApiView v = new ApiView();
@@ -46,13 +51,6 @@ public class OneController {
 
 		}
 		return v;
-	}
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ApiView> notValid() {
-		System.out.println("notValid");
-		return ResponseEntity.badRequest().body(restApi("Faild", 2000));
-
 	}
 
 	@GetMapping(value = "/{companyId}/list", produces = "application/json; charset=UTF-8")
@@ -87,12 +85,21 @@ public class OneController {
 
 	@PostMapping(value = "/add", produces = "application/json; charset=UTF-8")
 	public ResponseEntity<ApiView> addcom(@Valid Com param) {
-		int result = oneService.add(param);
+		int result = oneService.addCom(param);
 		if (result == 1) {
 			return ResponseEntity.ok(restApi("Success", 200));
 		} else {
 			return ResponseEntity.badRequest().body(restApi("Fail", 2000));
 		}
 
+	}
+
+	@PostMapping(value = "/upload", produces = "application/json; charset=UTF-8")
+	public Map<String, Integer> uploadCSV(CSVfiles files) throws IOException {
+		/*
+		 * if(!CSVLib.isVaild(files)) { return
+		 * ResponseEntity.badRequest().body(restApi("Fail", 2000)); }
+		 */
+		return oneService.processCSV(files);
 	}
 }

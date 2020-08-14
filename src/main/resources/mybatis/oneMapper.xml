@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.example.restassignment.OneMapper">
+<mapper namespace="com.example.restassignment.mapper.OneMapper">
 
- <select id="searchCompany" resultType="com.example.restassignment.entity.Com">
+ <select id="searchCompany" resultType="com.example.restassignment.model.entity.Com">
 	SELECT * from go_company where id= #{id}
  </select> 
  
- <select id="searchSubject" resultType="com.example.restassignment.entity.Sub">
+ <select id="searchSubject" resultType="com.example.restassignment.model.entity.Sub">
 	SELECT * from  go_account_subject where company_id= #{id}
  </select>
  
@@ -14,7 +14,7 @@
  delete from go_company where id = #{id}
  </delete>
  
- <update id="updateCompany" parameterType="com.example.restassignment.entity.Com">
+ <update id="updateCompany" parameterType="com.example.restassignment.model.entity.Com">
  UPDATE go_company 
     <set>
       <if test="created_at != null">created_at=#{created_at},</if>
@@ -33,9 +33,51 @@
   where id = #{id}
 </update>
 
-<insert id="insertCompany" parameterType="com.example.restassignment.entity.Com">
+<insert id="insertCompany" parameterType="com.example.restassignment.model.entity.Com">
 INSERT INTO go_company (created_at,modified_at,deleted_at,companyName,users_total,users_deleted,users_use,service_avail,sync,sync_kind,sync_id) VALUES (
 		#{created_at},#{modified_at},#{deleted_at},#{companyName},#{users_total},#{users_deleted},#{users_use},#{service_avail},#{sync},#{sync_kind},#{sync_id})
+</insert>
+
+
+<insert id="insertbulkCompany" parameterType="java.util.List">
+        INSERT INTO go_company
+        VALUES
+        <foreach collection="list" item="item" index="index" open="(" separator="),("  close=")">
+			null,
+            null,
+            null,
+            null,
+            #{item.companyName},
+            #{item.users_total},
+            #{item.users_deleted},
+            #{item.users_use},
+            #{item.service_avail},
+            #{item.sync},
+            #{item.sync_kind},
+            #{item.sync_id}
+       </foreach>
+</insert>
+<insert id="insertbulkSubject" parameterType="java.util.List">
+        INSERT INTO go_account_subject
+        VALUES
+        <foreach collection="list" item="item" index="index" open="(" separator="),("  close=")">
+            #{item.id},
+            #{item.account_system},
+            #{item.account_code},
+            #{item.account_subject_name_detail},
+            #{item.account_subject_name},
+            #{item.division},
+            #{item.relation_code},
+            #{item.relation_account_subject_name_detail},
+            #{item.company_id},
+            #{item.created_at},
+            #{item.modified_at},
+            #{item.deleted_at}
+       </foreach>
+</insert>
+
+<insert id="insertSubject" parameterType="com.example.restassignment.model.entity.Sub">
+INSERT INTO 
 </insert>
 
 </mapper>
