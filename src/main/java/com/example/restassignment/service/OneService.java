@@ -118,13 +118,12 @@ public class OneService {
 	public Map<String, Integer> processCSV(@Valid CSVfiles files) throws IOException {
 		int coms = this.ComCsvinsert(files.getCompanyfile());
 		
-		//int subs = this.SubCsvinsert(files.getAccountsfile());
+		int subs = this.SubCsvinsert(files.getAccountsfile());
 
 		Map<String, Integer> result = new HashMap<String, Integer>();
 
-		// subsuc = this.addmassiveSub(subs);
 		result.put("Com", coms);
-		//result.put("Sub", subs);
+		result.put("Sub", subs);
 		return result;
 	}
 
