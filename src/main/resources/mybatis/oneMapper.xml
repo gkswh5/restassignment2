@@ -5,7 +5,9 @@
  <select id="searchCompany" resultType="com.example.restassignment.model.entity.Com">
 	SELECT * from go_company where id= #{id}
  </select> 
- 
+  <select id="searchCompanyName" resultType="String">
+	SELECT company from go_company where id= #{id}
+ </select> 
  <select id="searchSubject" resultType="com.example.restassignment.model.entity.Sub">
 	SELECT * from  go_account_subject where company_id= #{id}
  </select>
@@ -40,13 +42,9 @@ INSERT INTO go_company (created_at,modified_at,deleted_at,companyName,users_tota
 
 
 <insert id="insertbulkCompany" parameterType="java.util.List">
-        INSERT INTO go_company
+        INSERT INTO go_company (companyName,users_total,users_deleted,users_use,service_avail,sync,sync_kind,sync_id)
         VALUES
         <foreach collection="list" item="item" index="index" open="(" separator="),("  close=")">
-			null,
-            null,
-            null,
-            null,
             #{item.companyName},
             #{item.users_total},
             #{item.users_deleted},
@@ -58,10 +56,9 @@ INSERT INTO go_company (created_at,modified_at,deleted_at,companyName,users_tota
        </foreach>
 </insert>
 <insert id="insertbulkSubject" parameterType="java.util.List">
-        INSERT INTO go_account_subject
+        INSERT INTO go_account_subject (account_system,account_code,account_subject_name_detail,account_subject_name,division,relation_code,relation_account_subject_name_detail)
         VALUES
         <foreach collection="list" item="item" index="index" open="(" separator="),("  close=")">
-            #{item.id},
             #{item.account_system},
             #{item.account_code},
             #{item.account_subject_name_detail},
@@ -69,10 +66,6 @@ INSERT INTO go_company (created_at,modified_at,deleted_at,companyName,users_tota
             #{item.division},
             #{item.relation_code},
             #{item.relation_account_subject_name_detail},
-            #{item.company_id},
-            #{item.created_at},
-            #{item.modified_at},
-            #{item.deleted_at}
        </foreach>
 </insert>
 

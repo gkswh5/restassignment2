@@ -82,14 +82,14 @@ public class OneService {
 		int result = 0;
 		List<Com> sublist = new ArrayList<Com>();
 		while(it.hasNext()) {
-			Com c = it.next();
-			System.out.println(c);
-			sublist.add(c);
+			sublist.add(it.next());
 			if(sublist.size()>1000) {
 				result += mapper.insertbulkCompany(sublist);
 				sublist.clear();
 			}
 		}
+		result += mapper.insertbulkCompany(sublist);
+		sublist.clear();
 		return result;
 	}
 
@@ -109,6 +109,8 @@ public class OneService {
 				sublist.clear();
 			}
 		}
+		result += mapper.insertbulkSubject(sublist);
+		sublist.clear();
 		return result;
 	}
 
